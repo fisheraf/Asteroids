@@ -170,3 +170,49 @@ Received Import Request.
   path: Assets/UniversalRenderPipelineGlobalSettings.asset
   artifactKey: Guid(52450ee4f519e7f4d9392570356c9ea6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
 Start importing Assets/UniversalRenderPipelineGlobalSettings.asset using Guid(52450ee4f519e7f4d9392570356c9ea6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b0cdb2ca1174556f21f96280362f1eba') in 0.030270 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 451.364851 seconds.
+  path: Assets
+  artifactKey: Guid(00000000000000001000000000000000) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets using Guid(00000000000000001000000000000000) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '79842766b460edbeab6a34051e857a80') in 0.004457 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 7.140255 seconds.
+  path: Assets/Sprites
+  artifactKey: Guid(e001d7c57e3431b48848aeed4dcdd90f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites using Guid(e001d7c57e3431b48848aeed4dcdd90f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b13bb37ddeef4aa22a197d2aa12347ba') in 0.004269 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 11.168656 seconds.
+  path: Assets/Scripts
+  artifactKey: Guid(f884e58716522c14ab61072d00e4071d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts using Guid(f884e58716522c14ab61072d00e4071d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ee2a41740fbebc9a2ddb06a981439164') in 0.004576 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 5.719200 seconds.
+  path: Packages/com.unity.2d.sprite/Editor/ObjectMenuCreation/DefaultAssets/Textures/v2/9Sliced.png
+  artifactKey: Guid(8884154dfe85442a3a3578be807dbcdf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Packages/com.unity.2d.sprite/Editor/ObjectMenuCreation/DefaultAssets/Textures/v2/9Sliced.png using Guid(8884154dfe85442a3a3578be807dbcdf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '406984a7e2688a4b85ea8580c6a4bbf2') in 0.103769 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000013 seconds.
+  path: Packages/com.unity.2d.sprite/Editor/ObjectMenuCreation/DefaultAssets/Textures/v2/Square.png
+  artifactKey: Guid(311925a002f4447b3a28927169b83ea6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Packages/com.unity.2d.sprite/Editor/ObjectMenuCreation/DefaultAssets/Textures/v2/Square.png using Guid(311925a002f4447b3a28927169b83ea6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5288c754bb314b128bc17f144ac314ad') in 0.014699 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000014 seconds.
+  path: Packages/com.unity.2d.sprite/Editor/ObjectMenuCreation/DefaultAssets/Textures/v2/Circle.png
+  artifactKey: Guid(a86470a33a6bf42c4b3595704624658b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Packages/com.unity.2d.sprite/Editor/ObjectMenuCreation/DefaultAssets/Textures/v2/Circle.png using Guid(a86470a33a6bf42c4b3595704624658b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7379bda0eb7b58df1cb22c00af49815f') in 0.013874 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000015 seconds.
+  path: Packages/com.unity.2d.sprite/Editor/ObjectMenuCreation/DefaultAssets/Textures/v2/IsometricDiamond.png
+  artifactKey: Guid(19fb86013d8c24d6cb8410c0aadf30fa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Packages/com.unity.2d.sprite/Editor/ObjectMenuCreation/DefaultAssets/Textures/v2/IsometricDiamond.png using Guid(19fb86013d8c24d6cb8410c0aadf30fa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cf7d60748cfad5f0f775eb4d46dba357') in 0.014494 seconds 
+Editor requested this worker to shutdown with reason: Scaling down because of idle timeout
+AssetImportWorker is now disconnected from the server
+Process exiting
+Exiting without the bug reporter. Application will terminate with return code 0
