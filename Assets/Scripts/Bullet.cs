@@ -30,4 +30,9 @@ public class Bullet : MonoBehaviour
     {
         Destroy(gameObject);
     }
+
+    public void SetBulletSpeed(float speed)
+    {
+        bulletSpeed = speed;
+    }
 }

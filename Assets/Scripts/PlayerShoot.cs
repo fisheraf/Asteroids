@@ -7,6 +7,7 @@ public class PlayerShoot : MonoBehaviour
 {
     [SerializeField] float reloadTime;
     [SerializeField] GameObject bulletPrefab;
+    [SerializeField] float bulletSpeed;
     [SerializeField] Transform fireLocation;
 
     public float reloadTimer;
@@ -14,7 +15,7 @@ public class PlayerShoot : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        bulletPrefab.GetComponent<Bullet>().SetBulletSpeed(bulletSpeed);
     }
 
     // Update is called once per frame

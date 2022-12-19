@@ -4,14 +4,12 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] float thrustSpeed;
-    [SerializeField] float rotationSpeed;
+    [SerializeField] float movementSpeed;
 
-    private Rigidbody2D playerRigidbody;
 
     private void Awake()
     {
-        playerRigidbody = GetComponent<Rigidbody2D>();
+        
     }
 
 
@@ -24,11 +22,13 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float verticalInput = Input.GetAxis("Vertical");
-        playerRigidbody.AddRelativeForce(Vector2.up * verticalInput * thrustSpeed);
-
-
-        float horizontalInput = Input.GetAxis("Horizontal");
-        transform.Rotate(0, 0, horizontalInput * -rotationSpeed * Time.deltaTime);
+        if(transform.position.x > -19 && Input.GetKey(KeyCode.LeftArrow))
+        {
+            transform.Translate(-movementSpeed * Time.deltaTime,0,0);
+        }
+        if (transform.position.x < 19 && Input.GetKey(KeyCode.RightArrow))
+        {
+            transform.Translate(movementSpeed * Time.deltaTime, 0, 0);
+        }
     }
 }
