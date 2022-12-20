@@ -22,11 +22,11 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(transform.position.x > -19 && Input.GetKey(KeyCode.LeftArrow))
+        if(transform.position.x > -19 && (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A)))
         {
             transform.Translate(-movementSpeed * Time.deltaTime,0,0);
         }
-        if (transform.position.x < 19 && Input.GetKey(KeyCode.RightArrow))
+        if (transform.position.x < 19 && (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)))
         {
             transform.Translate(movementSpeed * Time.deltaTime, 0, 0);
         }

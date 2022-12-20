@@ -7,10 +7,15 @@ public class Invader: MonoBehaviour
     [SerializeField] float movementSpeed;
     [SerializeField] int direction;
 
+    [SerializeField] int scoreValue;
+
+    private InvaderManager invaderManager;
+
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        invaderManager = FindObjectOfType<InvaderManager>();
     }
 
     // Update is called once per frame
@@ -18,27 +23,28 @@ public class Invader: MonoBehaviour
     {
         transform.Translate(movementSpeed * direction * Time.deltaTime, 0, 0);
 
-        if(transform.position.x > 19)
+        if(transform.position.x > 19.5 || transform.position.x < -19.5)
         {
-            SetDirection(-1);
-            MoveDownRow();
-        }
-        if (transform.position.x < -19)
-        {
-            SetDirection(1);
-            MoveDownRow();
+            invaderManager.ChangeDirectionAndMoveDownRow();
         }
     }
 
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Destroy(gameObject);
+        Death();
     }
 
-    public void SetDirection(int dir)
+    public void ChangeDirectionAndMoveDownRow()
     {
-        direction = dir;
+        ChangeDirection();
+        MoveDownRow();
+    }
+
+
+    public void ChangeDirection()
+    {
+        direction *= -1;
     }
 
     public void MoveDownRow()
@@ -51,5 +57,12 @@ public class Invader: MonoBehaviour
     public void SetMovementSpeed(float speed)
     {
         movementSpeed = speed;
+    }
+
+    void Death()
+    {
+        invaderManager.RemoveInvader(this);
+        FindObjectOfType<ScoreManager>().ChangeScore(scoreValue);
+        Destroy(gameObject);
     }
 }
