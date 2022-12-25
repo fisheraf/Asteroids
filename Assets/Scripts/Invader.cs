@@ -8,6 +8,10 @@ public class Invader: MonoBehaviour
     [SerializeField] int direction;
 
     [SerializeField] int scoreValue;
+    
+    [SerializeField] GameObject bulletPrefab;
+    [SerializeField] float bulletSpeed;
+    [SerializeField] Transform fireLocation;
 
     private InvaderManager invaderManager;
 
@@ -15,6 +19,8 @@ public class Invader: MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        bulletPrefab.GetComponent<Bullet>().SetBulletSpeed(bulletSpeed);
+
         invaderManager = FindObjectOfType<InvaderManager>();
     }
 
@@ -57,6 +63,11 @@ public class Invader: MonoBehaviour
     public void SetMovementSpeed(float speed)
     {
         movementSpeed = speed;
+    }
+
+    public void Shoot()
+    {
+        Instantiate(bulletPrefab, fireLocation.position, fireLocation.rotation);
     }
 
     void Death()
