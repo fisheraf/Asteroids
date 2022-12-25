@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Invader: MonoBehaviour
 {
-    [SerializeField] float movementSpeed;
-    [SerializeField] int direction;
 
     [SerializeField] int scoreValue;
     
@@ -14,7 +12,7 @@ public class Invader: MonoBehaviour
     [SerializeField] Transform fireLocation;
 
     private InvaderManager invaderManager;
-
+    private InvaderMovement invaderMovement;
 
     // Start is called before the first frame update
     void Start()
@@ -22,16 +20,15 @@ public class Invader: MonoBehaviour
         bulletPrefab.GetComponent<Bullet>().SetBulletSpeed(bulletSpeed);
 
         invaderManager = FindObjectOfType<InvaderManager>();
+        invaderMovement = FindObjectOfType<InvaderMovement>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(movementSpeed * direction * Time.deltaTime, 0, 0);
-
-        if(transform.position.x > 19.5 || transform.position.x < -19.5)
+        if (transform.position.x > 19.5 || transform.position.x < -19.5)
         {
-            invaderManager.ChangeDirectionAndMoveDownRow();
+            invaderMovement.ChangeDirectionAndMoveDownRow();
         }
     }
 
@@ -41,29 +38,6 @@ public class Invader: MonoBehaviour
         Death();
     }
 
-    public void ChangeDirectionAndMoveDownRow()
-    {
-        ChangeDirection();
-        MoveDownRow();
-    }
-
-
-    public void ChangeDirection()
-    {
-        direction *= -1;
-    }
-
-    public void MoveDownRow()
-    {
-        Vector3 position = transform.position;
-        position.y -= 1;
-        transform.position = position;
-    }
-
-    public void SetMovementSpeed(float speed)
-    {
-        movementSpeed = speed;
-    }
 
     public void Shoot()
     {

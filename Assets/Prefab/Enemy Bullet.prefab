@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 1208156843114142426}
   - component: {fileID: 5815481149774817110}
   - component: {fileID: 320907216647138753}
-  m_Layer: 0
-  m_Name: Bullet
+  m_Layer: 7
+  m_Name: Enemy Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -80,7 +80,7 @@ GameObject:
   - component: {fileID: 6395080770137807877}
   - component: {fileID: 5652231321884011779}
   - component: {fileID: 1019999084}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -7,6 +7,8 @@ public class InvaderManager : MonoBehaviour
     [SerializeField] float startingInvaderSpeed;
     [SerializeField] List<Invader> ListOfInvaders = new List<Invader>();
 
+    [SerializeField] GameObject invaderHolder;
+
     [SerializeField] float reloadTime;
     public float reloadTimer;
 
@@ -20,6 +22,15 @@ public class InvaderManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        InvadersShoot();
+    }
+
+    private void InvadersShoot()
+    {
+        if(ListOfInvaders.Count == 0)
+        {
+            return;
+        }
         if (reloadTimer >= reloadTime)
         {
             reloadTimer = 0f;
@@ -30,13 +41,6 @@ public class InvaderManager : MonoBehaviour
         reloadTimer += Time.deltaTime;
     }
 
-    public void ChangeDirectionAndMoveDownRow()
-    {
-        foreach (Invader i in ListOfInvaders)
-        {
-            i.ChangeDirectionAndMoveDownRow();
-        }
-    }
 
     public void RemoveInvader(Invader invader)
     {
@@ -45,9 +49,6 @@ public class InvaderManager : MonoBehaviour
 
     public void SetInvaderSpeed(float speed)
     {
-        foreach (Invader i in ListOfInvaders)
-        {
-            i.SetMovementSpeed(speed);
-        }
+        invaderHolder.GetComponent<InvaderMovement>().SetMovementSpeed(speed);        
     }
 }

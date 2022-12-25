@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2341309604154566899}
   - component: {fileID: 2341309604154566901}
   - component: {fileID: 2341309604154566900}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Hexagon Flat-Top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -127,7 +127,7 @@ GameObject:
   - component: {fileID: 2341309605563385162}
   - component: {fileID: 2341309605563385163}
   - component: {fileID: 2341309605563385164}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Invader
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -166,7 +166,7 @@ MonoBehaviour:
   movementSpeed: 10
   direction: 1
   scoreValue: 100
-  bulletPrefab: {fileID: 6025036384684548275, guid: 536a97a246ea19b4da68b57038c4ec72, type: 3}
+  bulletPrefab: {fileID: 6025036384684548275, guid: 271adc8f9b8e1854588dfbef1bb680fb, type: 3}
   bulletSpeed: 10
   fireLocation: {fileID: 8207535655872844691}
 --- !u!50 &2341309605563385164
@@ -199,7 +199,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8207535655872844691}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FireLocation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
