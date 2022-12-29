@@ -329,6 +329,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameSpeed: 1
+  round: 0
   scoreText: {fileID: 495438681}
   score: 0
   playerHealth:
@@ -517,7 +518,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03698ff7d08c8d549b9c93997ad1fb6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  reloadTime: 1
+  reloadTime: 0.1
   bulletPrefab: {fileID: 6025036384684548275, guid: 536a97a246ea19b4da68b57038c4ec72, type: 3}
   bulletSpeed: 20
   fireLocation: {fileID: 646940320}

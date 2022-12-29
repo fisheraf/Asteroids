@@ -44,6 +44,11 @@ public class Invader: MonoBehaviour
         Instantiate(bulletPrefab, fireLocation.position, fireLocation.rotation);
     }
 
+    public void SetScoreValue(int value)
+    {
+        scoreValue = value;
+    }
+
     void Death()
     {
         invaderManager.RemoveInvader(this);

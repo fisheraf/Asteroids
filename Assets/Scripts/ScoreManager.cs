@@ -8,6 +8,7 @@ using System;
 public class ScoreManager : MonoBehaviour
 {
     [SerializeField] float gameSpeed;
+    [SerializeField] int round;
 
     [SerializeField] TextMeshProUGUI scoreText;
     [SerializeField] int score;
@@ -30,7 +31,7 @@ public class ScoreManager : MonoBehaviour
 
     private void GameSpeedUpdate()
     {
-        if(gameSpeed != lastGameSpeed)
+        if (gameSpeed != lastGameSpeed)
         {
             Debug.Log("Game Speed set to: " + gameSpeed.ToString());
             Time.timeScale = gameSpeed;
@@ -51,7 +52,7 @@ public class ScoreManager : MonoBehaviour
 
     public void DisplayHealthIcons(int number)
     {
-        if(number <= 0)
+        if (number <= 0)
         {
             GameOver();
         }
@@ -69,4 +70,15 @@ public class ScoreManager : MonoBehaviour
         Debug.Log("Game Over.");
     }
 
+    public int Round
+    {
+        get { return round; }
+        set { round = value; }
+    }
+
+    public float GameSpeed
+    {
+        get { return gameSpeed; }
+        set { gameSpeed = value; }
+    }
 }
