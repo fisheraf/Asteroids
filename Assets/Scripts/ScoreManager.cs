@@ -52,16 +52,17 @@ public class ScoreManager : MonoBehaviour
 
     public void DisplayHealthIcons(int number)
     {
+        if (number >= 0)
+        {
+            for (int i = playerHealth.Count; i > number; i--)
+            {
+                playerHealth[i - 1].color = Color.clear;
+            }
+        }        
+
         if (number <= 0)
         {
             GameOver();
-        }
-        else
-        {
-            for (int i = playerHealth.Count - 1; i > number; i--)
-            {
-                playerHealth[i].color = Color.clear;
-            }
         }
     }
 

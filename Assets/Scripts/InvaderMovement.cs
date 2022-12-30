@@ -29,14 +29,14 @@ public class InvaderMovement : MonoBehaviour
     {
         if (changeDirectionTimer < 0)
         {
-            Debug.Log("Direction Changed.");
+            //Debug.Log("Direction Changed.");
             ChangeDirection();
             MoveDownRow();
             changeDirectionTimer = .2f;
         }
         else
         {
-            Debug.Log("Too soon to change direction");
+            //Debug.Log("Too soon to change direction");
         }
     }
 

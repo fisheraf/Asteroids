@@ -7,17 +7,21 @@ public class Player : MonoBehaviour
 {
     [Header("Shooting")]
     [SerializeField] float reloadTime;
+    [SerializeField] float reloadTimer;
+
+    [SerializeField] int maxBulletCount;
+    [SerializeField] int bulletCount;
+
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] float bulletSpeed;
     [SerializeField] Transform fireLocation;
-
-    public float reloadTimer;
+    
 
     [Header("Movement")]
     [SerializeField] float movementSpeed;
 
     [Header("Health")]
-    [SerializeField] int health;
+    [SerializeField] [Range(0,10)] int health;
 
     ScoreManager scoreManager;
 
@@ -26,25 +30,36 @@ public class Player : MonoBehaviour
     {
         bulletPrefab.GetComponent<Bullet>().SetBulletSpeed(bulletSpeed);
         scoreManager = FindObjectOfType<ScoreManager>();
+
+        scoreManager.DisplayHealthIcons(health);
     }
 
     // Update is called once per frame
     void Update()
     {
-        Shooting();                
+        //ShootingWithReloadTimer();
+        ShootingWithBulletCount();
+    }
 
-        void Shooting()
+    private void ShootingWithReloadTimer()
+    {
+        if ((Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.W)) && (reloadTimer >= reloadTime))
         {
-            if ((Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.W)) && (reloadTimer >= reloadTime))
-            {
-                reloadTimer = 0f;
-                Shoot();
-            }
+            reloadTimer = 0f;
+            Shoot();
+        }
 
-            reloadTimer += Time.deltaTime;
+        reloadTimer += Time.deltaTime;
+    }
+
+    private void ShootingWithBulletCount()
+    {
+        if ((Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.W)) && (bulletCount < maxBulletCount))
+        {
+            Shoot();
         }
     }
-    
+
     private void LateUpdate()
     {
         Movement();
@@ -64,7 +79,9 @@ public class Player : MonoBehaviour
 
     private void Shoot()
     {
-        Instantiate(bulletPrefab, fireLocation.position, fireLocation.rotation);
+        GameObject bullet = Instantiate(bulletPrefab, fireLocation.position, fireLocation.rotation);
+        bullet.tag = "Player";
+        AddBullet(1);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -75,6 +92,21 @@ public class Player : MonoBehaviour
     private void TakeDamage()
     {
         health -= 1;
+        Debug.Log("Player hit. " + health.ToString() + " left.");
         scoreManager.DisplayHealthIcons(health);
+    }
+
+    private void AddBullet(int count)
+    {
+        bulletCount += count;
+    }
+
+    public void SubtractBullet(int count)
+    {
+        bulletCount -= count;
+        if(bulletCount <= 0)
+        {
+            bulletCount = 0;
+        }
     }
 }
