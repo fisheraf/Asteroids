@@ -11,7 +11,7 @@ public class Bullet : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(DeathTimer(existenceTime));
+        //StartCoroutine(DeathTimer(existenceTime));
     }
 
     // Update is called once per frame
@@ -28,6 +28,10 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if(gameObject.layer == LayerMask.NameToLayer("Player"))
+        {
+            FindObjectOfType<Player>().RemoveBullet(gameObject);
+        }
         Destroy(gameObject);
     }
 

@@ -11,6 +11,9 @@ public class Player : MonoBehaviour
     [SerializeField] float bulletSpeed;
     [SerializeField] Transform fireLocation;
 
+    [SerializeField] int maxBulletCount;
+    [SerializeField] List<GameObject> bulletList = new List<GameObject>();
+
     public float reloadTimer;
 
     [Header("Movement")]
@@ -31,20 +34,33 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Shooting();                
+        //ShootingReloadTimer();
 
-        void Shooting()
+        ShootingBulletCount();
+    }
+
+    private void ShootingReloadTimer()
+    {
+        if ((Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.W)) && (reloadTimer >= reloadTime))
         {
-            if ((Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.W)) && (reloadTimer >= reloadTime))
+            reloadTimer = 0f;
+            Shoot();
+        }
+
+        reloadTimer += Time.deltaTime;
+    }
+
+    private void ShootingBulletCount()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W))
+        {
+            if(bulletList.Count < maxBulletCount)
             {
-                reloadTimer = 0f;
                 Shoot();
             }
-
-            reloadTimer += Time.deltaTime;
         }
     }
-    
+
     private void LateUpdate()
     {
         Movement();
@@ -64,7 +80,8 @@ public class Player : MonoBehaviour
 
     private void Shoot()
     {
-        Instantiate(bulletPrefab, fireLocation.position, fireLocation.rotation);
+        GameObject bullet = Instantiate(bulletPrefab, fireLocation.position, fireLocation.rotation);
+        bulletList.Add(bullet);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -76,5 +93,10 @@ public class Player : MonoBehaviour
     {
         health -= 1;
         scoreManager.DisplayHealthIcons(health);
+    }
+
+    public void RemoveBullet(GameObject bullet)
+    {
+        bulletList.Remove(bullet);
     }
 }
