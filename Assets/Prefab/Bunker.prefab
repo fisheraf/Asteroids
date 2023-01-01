@@ -754,7 +754,6 @@ GameObject:
   m_Component:
   - component: {fileID: 785250562282690583}
   - component: {fileID: 785250562282690582}
-  - component: {fileID: 5309884883294063024}
   m_Layer: 0
   m_Name: Bunker
   m_TagString: Untagged
@@ -808,31 +807,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &5309884883294063024
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 785250562282690569}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c1eef85d783ea44ba0e401aa7677689, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  initialHealth: 0
-  health: 0
-  blocks:
-  - {fileID: 785250562359732411}
-  - {fileID: 785250560925959209}
-  - {fileID: 785250562385788465}
-  - {fileID: 785250562132651507}
-  - {fileID: 785250561699415483}
-  - {fileID: 785250562219787649}
-  - {fileID: 785250562722794147}
-  - {fileID: 785250561424563799}
-  - {fileID: 785250562134064949}
-  - {fileID: 785250562391659169}
 --- !u!1 &785250562359732411
 GameObject:
   m_ObjectHideFlags: 0

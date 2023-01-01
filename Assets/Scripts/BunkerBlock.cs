@@ -16,13 +16,7 @@ public class BunkerBlock : MonoBehaviour
         
     }
 
-    /*private void OnCollisionEnter2D(Collision2D collision)
-    {
-        GetComponentInParent<Bunker>().RemoveBlock(gameObject);
-        Destroy(gameObject);
-    }*/
-
-    public void DestroyThisBlock()
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         Destroy(gameObject);
     }
