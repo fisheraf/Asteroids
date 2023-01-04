@@ -35,7 +35,11 @@ public class Invader: MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Death();
+        if(collision.gameObject.layer == LayerMask.NameToLayer("Player"))
+        {
+            GameManager.Instance.ScoreManager.PlayerBulletsHit += 1;
+            Death();
+        }
     }
 
 

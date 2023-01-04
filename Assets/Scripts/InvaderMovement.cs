@@ -7,14 +7,12 @@ public class InvaderMovement : MonoBehaviour
     [SerializeField] float movementSpeed;
     [SerializeField] int direction;
 
-    private InvaderManager invaderManager;
-
     private float changeDirectionTimer;
 
     // Start is called before the first frame update
     void Start()
     {
-        invaderManager = FindObjectOfType<InvaderManager>();
+
     }
 
     // Update is called once per frame
@@ -52,8 +50,9 @@ public class InvaderMovement : MonoBehaviour
         transform.position = position;
     }
 
-    public void SetMovementSpeed(float speed)
+    public float MovementSpeed
     {
-        movementSpeed = speed;
+        get { return movementSpeed; }
+        set { movementSpeed = value; }
     }
 }

@@ -22,21 +22,27 @@ public class Player : MonoBehaviour
     [Header("Health")]
     [SerializeField] int health;
 
-    ScoreManager scoreManager;
-
     // Start is called before the first frame update
     void Start()
     {
         bulletPrefab.GetComponent<Bullet>().SetBulletSpeed(bulletSpeed);
-        scoreManager = FindObjectOfType<ScoreManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
         //ShootingReloadTimer();
-
-        ShootingBulletCount();
+        if (GameManager.Instance.gameState == GameManager.GameState.Invaders || GameManager.Instance.gameState == GameManager.GameState.MainMenu)
+        {
+            ShootingBulletCount();
+        }
+    }
+    private void LateUpdate()
+    {
+        if (GameManager.Instance.gameState == GameManager.GameState.Invaders || GameManager.Instance.gameState == GameManager.GameState.MainMenu)
+        {
+            Movement();
+        }
     }
 
     private void ShootingReloadTimer()
@@ -61,20 +67,15 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void LateUpdate()
+    private void Movement()
     {
-        Movement();
-
-        void Movement()
+        if (transform.position.x > -19 && (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A)))
         {
-            if (transform.position.x > -19 && (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A)))
-            {
-                transform.Translate(-movementSpeed * Time.deltaTime, 0, 0);
-            }
-            if (transform.position.x < 19 && (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)))
-            {
-                transform.Translate(movementSpeed * Time.deltaTime, 0, 0);
-            }
+            transform.Translate(-movementSpeed * Time.deltaTime, 0, 0);
+        }
+        if (transform.position.x < 19 && (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)))
+        {
+            transform.Translate(movementSpeed * Time.deltaTime, 0, 0);
         }
     }
 
@@ -82,6 +83,10 @@ public class Player : MonoBehaviour
     {
         GameObject bullet = Instantiate(bulletPrefab, fireLocation.position, fireLocation.rotation);
         bulletList.Add(bullet);
+        if(GameManager.Instance.gameState == GameManager.GameState.Invaders)
+        {
+            GameManager.Instance.ScoreManager.PlayerBulletsFired += 1;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -92,7 +97,7 @@ public class Player : MonoBehaviour
     private void TakeDamage()
     {
         health -= 1;
-        scoreManager.DisplayHealthIcons(health);
+        GameManager.Instance.UIManager.DisplayHealthIcons(health);
     }
 
     public void RemoveBullet(GameObject bullet)

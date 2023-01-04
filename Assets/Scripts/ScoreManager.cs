@@ -1,32 +1,35 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
-using UnityEngine.UI;
-using System;
 
 public class ScoreManager : MonoBehaviour
 {
     [SerializeField] float gameSpeed;
     [SerializeField] int round;
 
-    [SerializeField] TextMeshProUGUI scoreText;
     [SerializeField] int score;
-    [SerializeField] List<Image> playerHealth = new List<Image>();
+
+    [SerializeField] int playerBulletsFired;
+    [SerializeField] int playerBulletsHit;
 
     float lastGameSpeed;
 
     // Start is called before the first frame update
     void Start()
     {
+        SetStartingScore();
+    }
+
+    private void SetStartingScore()
+    {
         score = 0;
-        Time.timeScale = gameSpeed;
-        UpdateScoreText();
+        //Time.timeScale = gameSpeed;
+        GameManager.Instance.UIManager.UpdateScoreText(score);
     }
 
     private void Update()
     {
-        GameSpeedUpdate();
+        //GameSpeedUpdate();
     }
 
     private void GameSpeedUpdate()
@@ -42,32 +45,7 @@ public class ScoreManager : MonoBehaviour
     public void ChangeScore(int value)
     {
         score += value;
-        UpdateScoreText();
-    }
-
-    public void UpdateScoreText()
-    {
-        scoreText.text = "Score: " + score.ToString();
-    }
-
-    public void DisplayHealthIcons(int number)
-    {
-        if (number <= 0)
-        {
-            GameOver();
-        }
-        else
-        {
-            for (int i = playerHealth.Count - 1; i > number; i--)
-            {
-                playerHealth[i].color = Color.clear;
-            }
-        }
-    }
-
-    public void GameOver()
-    {
-        Debug.Log("Game Over.");
+        GameManager.Instance.UIManager.UpdateScoreText(score);
     }
 
     public int Round
@@ -80,5 +58,17 @@ public class ScoreManager : MonoBehaviour
     {
         get { return gameSpeed; }
         set { gameSpeed = value; }
+    }
+
+    public int PlayerBulletsFired
+    {
+        get { return playerBulletsFired; }
+        set { playerBulletsFired = value; }
+    }
+
+    public int PlayerBulletsHit
+    {
+        get { return playerBulletsHit; }
+        set { playerBulletsHit = value; }
     }
 }

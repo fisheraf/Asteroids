@@ -21,26 +21,39 @@ public class InvaderManager : MonoBehaviour
     public float randomSpawnTime;
     public float spawnTimer;
 
-    ScoreManager scoreManager;
+    [SerializeField] GameObject bunkerPrefab;
+
+    InvaderMovement invaderMovement;
 
     // Start is called before the first frame update
     void Start()
     {
-        scoreManager = FindObjectOfType<ScoreManager>();
+        invaderMovement = FindObjectOfType<InvaderMovement>();
 
+        NewRandomReloadTime();
+        NewRandomSpawnTime();
+    }
+
+    public void StartInvaderGame()
+    {
         SetInvaderSpeed(startingInvaderSpeed);
         NewRandomReloadTime();
         NewRandomSpawnTime();
 
-        CreateInvaderWave(3,6,10);
+        CreateNewBunkers();
+
+        CreateInvaderWave(3, 6, 10);
     }
 
     // Update is called once per frame
     void Update()
     {
-        InvadersShoot();
+        if (GameManager.Instance.gameState == GameManager.GameState.Invaders)
+        {
+            InvadersShoot();
 
-        MysteryShipSpawnTimer();
+            MysteryShipSpawnTimer();
+        }
     }
 
     private void InvadersShoot()
@@ -71,10 +84,11 @@ public class InvaderManager : MonoBehaviour
         ListOfInvaders.Remove(invader);
         if(ListOfInvaders.Count == 0)
         {
-            Debug.Log("Round " + scoreManager.Round.ToString() + " over.");
-            scoreManager.Round += 1;
-            scoreManager.GameSpeed *= 1.1f;
-            switch (scoreManager.Round)
+            Debug.Log("Round " + GameManager.Instance.ScoreManager.Round.ToString() + " over.");
+            GameManager.Instance.ScoreManager.Round += 1;
+            //scoreManager.GameSpeed *= 1.1f;
+            invaderMovement.MovementSpeed *= 1.2f;
+            /*switch (scoreManager.Round)
             {
                 case 1:
                     CreateInvaderWave(3, 8, 15);
@@ -85,13 +99,13 @@ public class InvaderManager : MonoBehaviour
                 case 3:
                     CreateInvaderWave(5, 11, 25);
                     break;
-            }
+            }*/
         }
     }
 
     public void SetInvaderSpeed(float speed)
     {
-        invaderHolder.GetComponent<InvaderMovement>().SetMovementSpeed(speed);        
+        invaderMovement.MovementSpeed = speed;  
     }
 
     private void MysteryShipSpawnTimer()
@@ -127,6 +141,14 @@ public class InvaderManager : MonoBehaviour
                 invader.SetScoreValue(invaderScoreValue);  //dynamic
                 ListOfInvaders.Add(invader);
             }
+        }
+    }
+    
+    private void CreateNewBunkers()
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            Instantiate(bunkerPrefab, new Vector3(-14 + 7f * i, -6.5f, 0), Quaternion.identity);
         }
     }
 }
