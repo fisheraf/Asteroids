@@ -10,6 +10,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] List<Image> playerHealth = new List<Image>();
 
     [SerializeField] Canvas invadersCanvas;
+    [SerializeField] Canvas storyCanvas;
 
     // Start is called before the first frame update
     void Start()
@@ -49,12 +50,19 @@ public class UIManager : MonoBehaviour
         {
             case GameManager.GameState.MainMenu:
                 invadersCanvas.enabled = false;
+                storyCanvas.enabled = false;
+                break;
+            case GameManager.GameState.IntroText:
+                invadersCanvas.enabled = false;
+                storyCanvas.enabled = true;
                 break;
             case GameManager.GameState.Invaders:
                 invadersCanvas.enabled = true;
+                storyCanvas.enabled = false;
                 break;
             case GameManager.GameState.GameOver:
                 invadersCanvas.enabled = false;
+                storyCanvas.enabled = false;
                 break;
             default:
                 break;

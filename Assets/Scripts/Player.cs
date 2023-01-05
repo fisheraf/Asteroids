@@ -22,6 +22,8 @@ public class Player : MonoBehaviour
     [Header("Health")]
     [SerializeField] int health;
 
+    public bool cancelFirstShoot;  //Input bug - separate input mangager?
+
     // Start is called before the first frame update
     void Start()
     {
@@ -60,10 +62,11 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W))
         {
+            if(cancelFirstShoot) { Debug.Log("Cancel true"); cancelFirstShoot = false; return; }
             if(bulletList.Count < maxBulletCount)
             {
                 Shoot();
-            }
+            }            
         }
     }
 

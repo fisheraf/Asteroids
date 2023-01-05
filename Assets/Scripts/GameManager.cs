@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     {
         None,
         MainMenu,
+        IntroText,
         Invaders,
         GameOver
     }
@@ -35,6 +36,7 @@ public class GameManager : MonoBehaviour
         {
             _instance = this;
         }
+        SetGameState(GameState.MainMenu);
     }
 
     // Start is called before the first frame update
@@ -46,7 +48,13 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if(gameState == GameState.IntroText)
+        {
+            if(Input.GetKeyDown(KeyCode.Space))
+            {
+                SetGameState(GameState.Invaders);
+            }
+        }
     }
 
     private void OnValidate()
@@ -76,9 +84,13 @@ public class GameManager : MonoBehaviour
             case GameState.MainMenu:
                 Debug.Log("Gamestate set to main menu.");
                 break;
+            case GameState.IntroText:
+                Debug.Log("Gamestate set to intro text.");
+                break;
             case GameState.Invaders:
                 Debug.Log("Gamestate set to invaders.");
-                FindObjectOfType<ShootableButton>().SetInactive(); //attach in inspector?  switch statement for lastGameState?
+                //FindObjectOfType<ShootableButton>().SetInactive(); //attach in inspector?  switch statement for lastGameState?
+                FindObjectOfType<Player>().cancelFirstShoot = true;
                 invaderManager.StartInvaderGame();
                 break;
             case GameState.GameOver:

@@ -11,8 +11,9 @@ public class ShootableButton : MonoBehaviour
     public enum ButtonType
     {
         Start,
+        Controls,
         Options,
-        Exis
+        Exit
     }
 
     public ButtonType buttonType;
@@ -32,9 +33,12 @@ public class ShootableButton : MonoBehaviour
             case ButtonType.Start:
                 buttonText.text = "Start";
                 break;
+            case ButtonType.Controls:
+                buttonText.text = "Controls: A & D to move, space to shoot";
+                break;
             case ButtonType.Options:
                 break;
-            case ButtonType.Exis:
+            case ButtonType.Exit:
                 break;
             default:
                 break;
@@ -61,11 +65,13 @@ public class ShootableButton : MonoBehaviour
         switch (buttonType)
         {
             case ButtonType.Start:
-                GameManager.Instance.SetGameState(GameManager.GameState.Invaders);
+                GameManager.Instance.SetGameState(GameManager.GameState.IntroText);
+                break;
+            case ButtonType.Controls:
                 break;
             case ButtonType.Options:
                 break;
-            case ButtonType.Exis:
+            case ButtonType.Exit:
                 break;
             default:
                 break;
