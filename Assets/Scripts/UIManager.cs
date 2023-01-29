@@ -12,6 +12,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] Canvas invadersCanvas;
     [SerializeField] Canvas storyCanvas;
 
+    [SerializeField] GameObject startButton;
+    [SerializeField] GameObject optionsButton;
+    [SerializeField] GameObject overWorldButton;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -67,5 +71,12 @@ public class UIManager : MonoBehaviour
             default:
                 break;
         }
+    }
+
+    public void SetButtonsActive(bool b)
+    {
+        startButton.SetActive(b);
+        optionsButton.SetActive(b);
+        overWorldButton.SetActive(b);
     }
 }

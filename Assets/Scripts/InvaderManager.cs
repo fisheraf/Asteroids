@@ -23,6 +23,8 @@ public class InvaderManager : MonoBehaviour
 
     [SerializeField] GameObject bunkerPrefab;
 
+    [SerializeField] BoxCollider2D[] bulletKillers;
+
     InvaderMovement invaderMovement;
 
     // Start is called before the first frame update
@@ -149,6 +151,14 @@ public class InvaderManager : MonoBehaviour
         for (int i = 0; i < 5; i++)
         {
             Instantiate(bunkerPrefab, new Vector3(-14 + 7f * i, -6.5f, 0), Quaternion.identity);
+        }
+    }
+
+    public void SetBulletKillersActive(bool b)
+    {
+        foreach (BoxCollider2D boxCollider2D in bulletKillers)
+        {
+            boxCollider2D.enabled = b;
         }
     }
 }

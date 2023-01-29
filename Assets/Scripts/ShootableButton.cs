@@ -11,6 +11,7 @@ public class ShootableButton : MonoBehaviour
     public enum ButtonType
     {
         Start,
+        OverWorld,
         Controls,
         Options,
         Exit
@@ -32,6 +33,9 @@ public class ShootableButton : MonoBehaviour
         {
             case ButtonType.Start:
                 buttonText.text = "Start";
+                break;
+            case ButtonType.OverWorld:
+                buttonText.text = "OverWorld";
                 break;
             case ButtonType.Controls:
                 buttonText.text = "Controls: A & D to move, space to shoot";
@@ -66,6 +70,9 @@ public class ShootableButton : MonoBehaviour
         {
             case ButtonType.Start:
                 GameManager.Instance.SetGameState(GameManager.GameState.IntroText);
+                break;
+            case ButtonType.OverWorld:
+                GameManager.Instance.SetGameState(GameManager.GameState.OverWorld);
                 break;
             case ButtonType.Controls:
                 break;

@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
         MainMenu,
         IntroText,
         Invaders,
+        OverWorld,
         GameOver
     }
 
@@ -25,6 +26,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] UIManager uiManager;
     [SerializeField] InvaderManager invaderManager;
     [SerializeField] ScoreManager scoreManager;
+    [SerializeField] Player player;
+    [SerializeField] CameraFollow cameraFollow;
 
     private void Awake()
     {
@@ -83,15 +86,26 @@ public class GameManager : MonoBehaviour
         {
             case GameState.MainMenu:
                 Debug.Log("Gamestate set to main menu.");
+                player.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
                 break;
             case GameState.IntroText:
                 Debug.Log("Gamestate set to intro text.");
+                uiManager.SetButtonsActive(false);
                 break;
             case GameState.Invaders:
                 Debug.Log("Gamestate set to invaders.");
+                player.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+                cameraFollow.SetCameraToStop();
+                invaderManager.SetBulletKillersActive(true);
                 //FindObjectOfType<ShootableButton>().SetInactive(); //attach in inspector?  switch statement for lastGameState?
                 FindObjectOfType<Player>().cancelFirstShoot = true;
                 invaderManager.StartInvaderGame();
+                break;
+            case GameState.OverWorld:
+                Debug.Log("Gamestate set to OverWorld.");
+                player.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+                cameraFollow.SetCameraToFollow();
+                uiManager.SetButtonsActive(false);
                 break;
             case GameState.GameOver:
                 Debug.Log("Gamestate set to game over.");

@@ -11,7 +11,7 @@ public class Bullet : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //StartCoroutine(DeathTimer(existenceTime));
+        StartCoroutine(DeathTimer(existenceTime));
     }
 
     // Update is called once per frame
@@ -23,6 +23,7 @@ public class Bullet : MonoBehaviour
     IEnumerator DeathTimer(float time)
     {
         yield return new WaitForSeconds(time);
+        FindObjectOfType<Player>().RemoveBullet(gameObject);
         Destroy(gameObject);
     }
 

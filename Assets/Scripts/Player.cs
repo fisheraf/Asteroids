@@ -17,12 +17,22 @@ public class Player : MonoBehaviour
     public float reloadTimer;
 
     [Header("Movement")]
-    [SerializeField] float movementSpeed;
+    [SerializeField] float horizontalMovementSpeed;
+    [SerializeField] float forwardMovementSpeed;
+    [SerializeField] float rotationSpeed;
 
     [Header("Health")]
     [SerializeField] int health;
 
     public bool cancelFirstShoot;  //Input bug - separate input mangager?
+    Rigidbody2D playerRigidbody2D;
+    [SerializeField] ParticleSystem engineParticleSystem;
+
+    private void Awake()
+    {
+        playerRigidbody2D = GetComponent<Rigidbody2D>();
+        engineParticleSystem.Stop();
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -38,12 +48,16 @@ public class Player : MonoBehaviour
         {
             ShootingBulletCount();
         }
+        if(GameManager.Instance.gameState == GameManager.GameState.OverWorld)
+        {
+            MovementForOverWorld();
+        }
     }
     private void LateUpdate()
     {
         if (GameManager.Instance.gameState == GameManager.GameState.Invaders || GameManager.Instance.gameState == GameManager.GameState.MainMenu)
         {
-            Movement();
+            MovementForInvaders();
         }
     }
 
@@ -70,17 +84,33 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void Movement()
+    private void MovementForInvaders()
     {
         if (transform.position.x > -19 && (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A)))
         {
-            transform.Translate(-movementSpeed * Time.deltaTime, 0, 0);
+            transform.Translate(-horizontalMovementSpeed * Time.deltaTime, 0, 0);
         }
         if (transform.position.x < 19 && (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)))
         {
-            transform.Translate(movementSpeed * Time.deltaTime, 0, 0);
+            transform.Translate(horizontalMovementSpeed * Time.deltaTime, 0, 0);
         }
     }
+
+    private void MovementForOverWorld()
+    {
+        if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
+        {
+            playerRigidbody2D.AddRelativeForce(Vector2.up * forwardMovementSpeed, ForceMode2D.Impulse);
+            if (engineParticleSystem.isStopped) { engineParticleSystem.Play(); }
+        }
+        else
+        {
+            if (engineParticleSystem.isPlaying) { engineParticleSystem.Stop(); }
+        }
+        float rotation = Input.GetAxis("Horizontal") * rotationSpeed * Time.deltaTime;
+        transform.Rotate(0, 0, -rotation);
+    }
+
 
     private void Shoot()
     {
