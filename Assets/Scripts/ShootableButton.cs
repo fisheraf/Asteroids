@@ -22,12 +22,17 @@ public class ShootableButton : MonoBehaviour
 
     [SerializeField] TextMeshProUGUI buttonText;
     [SerializeField] Slider slider;
+    [SerializeField] Image fillImage;
+    [SerializeField] Image backgroundImage;
+
+    [SerializeField] Color originalColor;
+    [SerializeField] Color fadedColor;
 
     // Start is called before the first frame update
     void Start()
     {
         slider.maxValue = hits;
-        slider.value = 0;
+        slider.value = slider.maxValue;
 
         switch (buttonType)
         {
@@ -47,6 +52,8 @@ public class ShootableButton : MonoBehaviour
             default:
                 break;
         }
+
+        buttonText.color = originalColor;
     }
 
     // Update is called once per frame
@@ -57,10 +64,14 @@ public class ShootableButton : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        slider.value += 1;
-        if (slider.value == hits)
+        slider.value -= 1;
+        if (slider.value == 0)
         {
             ButtonAction();
+        }
+        if(slider.value == 1)
+        {
+            buttonText.color = fadedColor;
         }
     }
 

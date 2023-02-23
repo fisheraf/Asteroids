@@ -71,6 +71,7 @@ public class GameManager : MonoBehaviour
     public UIManager UIManager { get { return uiManager; } }
     public InvaderManager InvaderManager { get { return invaderManager; } }
     public ScoreManager ScoreManager { get { return scoreManager; } }
+    public Player Player { get { return player; } }
 
     public void GameOver()
     {

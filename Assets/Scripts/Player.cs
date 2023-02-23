@@ -19,14 +19,20 @@ public class Player : MonoBehaviour
     [Header("Movement")]
     [SerializeField] float horizontalMovementSpeed;
     [SerializeField] float forwardMovementSpeed;
+    float lastSpeed;
     [SerializeField] float rotationSpeed;
 
     [Header("Health")]
     [SerializeField] int health;
 
+    [Header("Planet")]
+    [SerializeField] Planet planetInRange;
+
+
     public bool cancelFirstShoot;  //Input bug - separate input mangager?
     Rigidbody2D playerRigidbody2D;
     [SerializeField] ParticleSystem engineParticleSystem;
+    [SerializeField] GameObject shipTravelParticleSystem;
 
     private void Awake()
     {
@@ -48,9 +54,18 @@ public class Player : MonoBehaviour
         {
             ShootingBulletCount();
         }
-        if(GameManager.Instance.gameState == GameManager.GameState.OverWorld)
+        if (GameManager.Instance.gameState == GameManager.GameState.OverWorld)
         {
             MovementForOverWorld();
+            ShootingReloadTimer();
+            Interact();
+        }
+
+        if (forwardMovementSpeed != lastSpeed)
+        {
+            Debug.Log("Resetting Particle System - Ship Travel position");
+            shipTravelParticleSystem.transform.localPosition = new Vector3(0, forwardMovementSpeed * 1.5f); // move based on movement speed?
+            lastSpeed = forwardMovementSpeed;
         }
     }
     private void LateUpdate()
@@ -63,7 +78,7 @@ public class Player : MonoBehaviour
 
     private void ShootingReloadTimer()
     {
-        if ((Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.W)) && (reloadTimer >= reloadTime))
+        if (Input.GetKey(KeyCode.Space) && (reloadTimer >= reloadTime))
         {
             reloadTimer = 0f;
             Shoot();
@@ -76,11 +91,11 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W))
         {
-            if(cancelFirstShoot) { Debug.Log("Cancel true"); cancelFirstShoot = false; return; }
-            if(bulletList.Count < maxBulletCount)
+            if (cancelFirstShoot) { Debug.Log("Cancel true"); cancelFirstShoot = false; return; }
+            if (bulletList.Count < maxBulletCount)
             {
                 Shoot();
-            }            
+            }
         }
     }
 
@@ -116,7 +131,7 @@ public class Player : MonoBehaviour
     {
         GameObject bullet = Instantiate(bulletPrefab, fireLocation.position, fireLocation.rotation);
         bulletList.Add(bullet);
-        if(GameManager.Instance.gameState == GameManager.GameState.Invaders)
+        if (GameManager.Instance.gameState == GameManager.GameState.Invaders)
         {
             GameManager.Instance.ScoreManager.PlayerBulletsFired += 1;
         }
@@ -136,5 +151,18 @@ public class Player : MonoBehaviour
     public void RemoveBullet(GameObject bullet)
     {
         bulletList.Remove(bullet);
+    }
+
+    public void SetPlantInRange(Planet planet)
+    {
+        planetInRange = planet;
+    }
+
+    private void Interact()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            planetInRange.InteractWithPlanet();
+        }
     }
 }
