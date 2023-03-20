@@ -55,13 +55,14 @@ public class StarManager : MonoBehaviour
         for (int i = 0; i < starCount; i++)
         {
             GameObject star = Instantiate(starPrefab, RandomLocation(), Quaternion.identity, starLayer1.transform);
-            float r = Random.Range(.1f, .3f);
+            float r = Random.Range(.1f, .4f);
             star.transform.localScale = new Vector3(r, r);
             star.isStatic = true;
+            star.layer = LayerMask.NameToLayer("Background");
 
 
             GameObject star2 =  Instantiate(starPrefab, RandomLocation(), Quaternion.identity, starLayer2.transform);
-            float r2 = Random.Range(.1f, .3f);
+            float r2 = Random.Range(.1f, .4f);
             star2.transform.localScale = new Vector3(r2, r2);
             star2.GetComponent<SpriteRenderer>().color = color1;
             if(i % 3 == 0)
@@ -69,9 +70,10 @@ public class StarManager : MonoBehaviour
                 star2.GetComponent<SpriteRenderer>().color = color2;
             }
             star2.isStatic = true;
+            star2.layer = LayerMask.NameToLayer("Background");
 
             GameObject star3 = Instantiate(starPrefab, RandomLocation(), Quaternion.identity, starLayer3.transform);
-            float r3 = Random.Range(.1f, .2f);
+            float r3 = Random.Range(.1f, .3f);
             star3.transform.localScale = new Vector3(r3, r3);
             star3.GetComponent<SpriteRenderer>().color = color3;
             if (i % 3 == 0)
@@ -79,6 +81,7 @@ public class StarManager : MonoBehaviour
                 star3.GetComponent<SpriteRenderer>().color = color4;
             }
             star3.isStatic = true;
+            star3.layer = LayerMask.NameToLayer("Background");
         }
     }
 

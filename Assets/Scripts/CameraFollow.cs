@@ -5,6 +5,7 @@ using DG.Tweening;
 
 public class CameraFollow : MonoBehaviour
 {
+    [SerializeField] private bool minimapCamera;
     [SerializeField] Transform playerTransform;
 
     [SerializeField] private bool cameraFollowing;
@@ -17,7 +18,14 @@ public class CameraFollow : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        cameraFollowing = false;
+        if (minimapCamera)
+        {
+            cameraFollowing = true;
+        }
+        else
+        {
+            cameraFollowing = false;
+        }
     }
 
     // Update is called once per frame
@@ -55,6 +63,7 @@ public class CameraFollow : MonoBehaviour
     public void SetCameraToStop()
     {
         cameraFollowing = false;
-        transform.position = new Vector3(0, 0, -10);
+        //transform.position = new Vector3(0, 0, -10);
+        transform.position = new Vector3(playerTransform.position.x, playerTransform.position.y, -10);
     }
 }

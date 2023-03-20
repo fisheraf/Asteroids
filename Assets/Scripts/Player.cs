@@ -21,6 +21,8 @@ public class Player : MonoBehaviour
     [SerializeField] float forwardMovementSpeed;
     float lastSpeed;
     [SerializeField] float rotationSpeed;
+    bool canMoveLeft = true;
+    bool canMoveRight = true;
 
     [Header("Health")]
     [SerializeField] int health;
@@ -36,7 +38,6 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        playerRigidbody2D = GetComponent<Rigidbody2D>();
         engineParticleSystem.Stop();
     }
 
@@ -99,15 +100,60 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void SetPlayerToInvadersMovement()
+    {
+        playerRigidbody2D = GetComponent<Rigidbody2D>(); // called here rather than awake as GameManger fires first
+        playerRigidbody2D.bodyType = RigidbodyType2D.Kinematic;
+        playerRigidbody2D.velocity = Vector2.zero;
+        playerRigidbody2D.constraints = RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
+    }
+
+    public void SetPlayerToOverworldMovement()
+    { 
+        playerRigidbody2D.bodyType = RigidbodyType2D.Dynamic;
+        playerRigidbody2D.constraints = RigidbodyConstraints2D.None;
+    }
+
     private void MovementForInvaders()
     {
-        if (transform.position.x > -19 && (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A)))
+        
+        if (canMoveLeft && (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A)))
         {
             transform.Translate(-horizontalMovementSpeed * Time.deltaTime, 0, 0);
         }
-        if (transform.position.x < 19 && (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)))
+        if (canMoveRight && (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)))
         {
             transform.Translate(horizontalMovementSpeed * Time.deltaTime, 0, 0);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("InvadersEdge"))
+        {
+            if(collision.gameObject.name == "Left")
+            {
+                canMoveLeft = false;
+            }
+            if (collision.gameObject.name == "Right")
+            {
+                canMoveRight = false;
+            }
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("InvadersEdge"))
+        {
+            if (collision.gameObject.name == "Left")
+            {
+                canMoveLeft = true;
+            }
+            if (collision.gameObject.name == "Right")
+            {
+                canMoveRight = true;
+            }
         }
     }
 
@@ -123,7 +169,8 @@ public class Player : MonoBehaviour
             if (engineParticleSystem.isPlaying) { engineParticleSystem.Stop(); }
         }
         float rotation = Input.GetAxis("Horizontal") * rotationSpeed * Time.deltaTime;
-        transform.Rotate(0, 0, -rotation);
+        //transform.Rotate(0, 0, -rotation);
+        playerRigidbody2D.AddTorque(-rotation);
     }
 
 
@@ -160,7 +207,7 @@ public class Player : MonoBehaviour
 
     private void Interact()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E) && planetInRange != null)
         {
             planetInRange.InteractWithPlanet();
         }

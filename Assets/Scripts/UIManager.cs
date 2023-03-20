@@ -52,22 +52,31 @@ public class UIManager : MonoBehaviour
     {
     switch (GameManager.Instance.gameState)
         {
-            case GameManager.GameState.MainMenu:
-                invadersCanvas.enabled = false;
-                storyCanvas.enabled = false;
-                break;
-            case GameManager.GameState.IntroText:
-                invadersCanvas.enabled = false;
-                storyCanvas.enabled = true;
-                break;
-            case GameManager.GameState.Invaders:
-                invadersCanvas.enabled = true;
-                storyCanvas.enabled = false;
-                break;
             case GameManager.GameState.GameOver:
                 invadersCanvas.enabled = false;
                 storyCanvas.enabled = false;
                 break;
+
+            case GameManager.GameState.IntroText:
+                invadersCanvas.enabled = false;
+                storyCanvas.enabled = true;
+                break;
+
+            case GameManager.GameState.Invaders:
+                invadersCanvas.enabled = true;
+                storyCanvas.enabled = false;
+                break;
+
+            case GameManager.GameState.MainMenu:
+                invadersCanvas.enabled = false;
+                storyCanvas.enabled = false;
+                break;
+
+            case GameManager.GameState.OverWorld:
+                invadersCanvas.enabled = false;
+                storyCanvas.enabled = false;
+                break;
+
             default:
                 break;
         }

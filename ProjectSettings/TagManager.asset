@@ -15,11 +15,11 @@ TagManager:
   - Enemy
   - Bunker
   - PlayerBullet
-  - 
-  - 
-  - 
-  - 
-  - 
+  - InvadersEdge
+  - OffScreenIndicator
+  - Background
+  - Interactable
+  - Minimap
   - 
   - 
   - 

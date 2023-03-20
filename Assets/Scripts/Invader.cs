@@ -23,19 +23,18 @@ public class Invader: MonoBehaviour
         invaderMovement = FindObjectOfType<InvaderMovement>();
     }
 
-    // Update is called once per frame
-    void Update()
+
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (transform.position.x > 19.5 || transform.position.x < -19.5)
+        if (collision.gameObject.layer == LayerMask.NameToLayer("InvadersEdge"))
         {
             invaderMovement.ChangeDirectionAndMoveDownRow();
         }
     }
 
-
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.layer == LayerMask.NameToLayer("PlayerBullet"))
+        if (collision.gameObject.layer == LayerMask.NameToLayer("PlayerBullet"))
         {
             GameManager.Instance.ScoreManager.PlayerBulletsHit += 1;
             Death();
