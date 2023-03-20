@@ -11,6 +11,7 @@ public class ShootableButton : MonoBehaviour
     public enum ButtonType
     {
         Start,
+        OverWorld,
         Controls,
         Options,
         Exit
@@ -21,17 +22,25 @@ public class ShootableButton : MonoBehaviour
 
     [SerializeField] TextMeshProUGUI buttonText;
     [SerializeField] Slider slider;
+    [SerializeField] Image fillImage;
+    [SerializeField] Image backgroundImage;
+
+    [SerializeField] Color originalColor;
+    [SerializeField] Color fadedColor;
 
     // Start is called before the first frame update
     void Start()
     {
         slider.maxValue = hits;
-        slider.value = 0;
+        slider.value = slider.maxValue;
 
         switch (buttonType)
         {
             case ButtonType.Start:
                 buttonText.text = "Start";
+                break;
+            case ButtonType.OverWorld:
+                buttonText.text = "OverWorld";
                 break;
             case ButtonType.Controls:
                 buttonText.text = "Controls: A & D to move, space to shoot";
@@ -43,6 +52,8 @@ public class ShootableButton : MonoBehaviour
             default:
                 break;
         }
+
+        buttonText.color = originalColor;
     }
 
     // Update is called once per frame
@@ -53,10 +64,14 @@ public class ShootableButton : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        slider.value += 1;
-        if (slider.value == hits)
+        slider.value -= 1;
+        if (slider.value == 0)
         {
             ButtonAction();
+        }
+        if(slider.value == 1)
+        {
+            buttonText.color = fadedColor;
         }
     }
 
@@ -66,6 +81,9 @@ public class ShootableButton : MonoBehaviour
         {
             case ButtonType.Start:
                 GameManager.Instance.SetGameState(GameManager.GameState.IntroText);
+                break;
+            case ButtonType.OverWorld:
+                GameManager.Instance.SetGameState(GameManager.GameState.OverWorld);
                 break;
             case ButtonType.Controls:
                 break;

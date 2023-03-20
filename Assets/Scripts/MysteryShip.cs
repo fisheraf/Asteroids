@@ -24,7 +24,7 @@ public class MysteryShip : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
+        if (collision.gameObject.layer == LayerMask.NameToLayer("PlayerBullet"))
         {
             GameManager.Instance.ScoreManager.PlayerBulletsHit += 1;
             Death();

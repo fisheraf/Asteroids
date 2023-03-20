@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
         MainMenu,
         IntroText,
         Invaders,
+        OverWorld,
         GameOver
     }
 
@@ -25,6 +26,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] UIManager uiManager;
     [SerializeField] InvaderManager invaderManager;
     [SerializeField] ScoreManager scoreManager;
+    [SerializeField] Player player;
+    [SerializeField] CameraFollow cameraFollow;
+    [SerializeField] OffScreenIndicator offScreenIndicator;
+    [SerializeField] GameObject minimap;
 
     private void Awake()
     {
@@ -37,6 +42,8 @@ public class GameManager : MonoBehaviour
             _instance = this;
         }
         SetGameState(GameState.MainMenu);
+
+        Application.targetFrameRate = 60;
     }
 
     // Start is called before the first frame update
@@ -68,6 +75,7 @@ public class GameManager : MonoBehaviour
     public UIManager UIManager { get { return uiManager; } }
     public InvaderManager InvaderManager { get { return invaderManager; } }
     public ScoreManager ScoreManager { get { return scoreManager; } }
+    public Player Player { get { return player; } }
 
     public void GameOver()
     {
@@ -76,26 +84,46 @@ public class GameManager : MonoBehaviour
 
     public void SetGameState(GameState state)
     {
-        if(lastGameState == state) { return; }
+        if(gameState == state) { return; }
         lastGameState = gameState;
         gameState = state;
         switch (state)
         {
-            case GameState.MainMenu:
-                Debug.Log("Gamestate set to main menu.");
-                break;
-            case GameState.IntroText:
-                Debug.Log("Gamestate set to intro text.");
-                break;
-            case GameState.Invaders:
-                Debug.Log("Gamestate set to invaders.");
-                //FindObjectOfType<ShootableButton>().SetInactive(); //attach in inspector?  switch statement for lastGameState?
-                FindObjectOfType<Player>().cancelFirstShoot = true;
-                invaderManager.StartInvaderGame();
-                break;
             case GameState.GameOver:
                 Debug.Log("Gamestate set to game over.");
                 break;
+
+            case GameState.IntroText:
+                Debug.Log("Gamestate set to intro text.");
+                uiManager.SetButtonsActive(false);
+                break;
+
+            case GameState.Invaders:
+                Debug.Log("Gamestate set to invaders.");
+                player.SetPlayerToInvadersMovement();
+                cameraFollow.SetCameraToStop();
+                invaderManager.SetBulletKillersActive(true);
+                //FindObjectOfType<ShootableButton>().SetInactive(); //attach in inspector?  switch statement for lastGameState?
+                //FindObjectOfType<Player>().cancelFirstShoot = true;  //no longer needed when coming from open world?
+                offScreenIndicator.gameObject.SetActive(false);
+                minimap.SetActive(false);
+                break;
+
+            case GameState.MainMenu:
+                Debug.Log("Gamestate set to main menu.");
+                player.SetPlayerToInvadersMovement();
+                minimap.SetActive(false);
+                break;
+
+            case GameState.OverWorld:
+                Debug.Log("Gamestate set to OverWorld.");
+                player.SetPlayerToOverworldMovement();
+                cameraFollow.SetCameraToFollow();
+                uiManager.SetButtonsActive(false);
+                offScreenIndicator.gameObject.SetActive(true);
+                minimap.SetActive(true);
+                break;
+
             default:
                 break;
         }

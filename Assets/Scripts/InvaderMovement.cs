@@ -18,7 +18,10 @@ public class InvaderMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(movementSpeed * direction * Time.deltaTime, 0, 0);
+        if(GameManager.Instance.gameState == GameManager.GameState.Invaders)
+        {
+            transform.Translate(movementSpeed * direction * Time.deltaTime, 0, 0);
+        }
 
         changeDirectionTimer -= Time.deltaTime;
     }

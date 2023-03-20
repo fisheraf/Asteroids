@@ -6,12 +6,13 @@ public class Bullet : MonoBehaviour
 {
     [SerializeField] float existenceTime;
     [SerializeField] float bulletSpeed;
+    [SerializeField] bool playerBullet;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        //StartCoroutine(DeathTimer(existenceTime));
+        StartCoroutine(DeathTimer(existenceTime));
     }
 
     // Update is called once per frame
@@ -23,12 +24,16 @@ public class Bullet : MonoBehaviour
     IEnumerator DeathTimer(float time)
     {
         yield return new WaitForSeconds(time);
+        if (playerBullet)
+        {
+            FindObjectOfType<Player>().RemoveBullet(gameObject);
+        }
         Destroy(gameObject);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(gameObject.layer == LayerMask.NameToLayer("Player"))
+        if (playerBullet)
         {
             FindObjectOfType<Player>().RemoveBullet(gameObject);
         }

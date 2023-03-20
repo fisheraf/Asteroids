@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1208156843114142426}
   - component: {fileID: 5815481149774817110}
   - component: {fileID: 320907216647138753}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: Player Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -47,7 +47,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   existenceTime: 2
-  bulletSpeed: 10
+  bulletSpeed: 20
+  playerBullet: 1
 --- !u!50 &320907216647138753
 Rigidbody2D:
   serializedVersion: 4
@@ -80,7 +81,7 @@ GameObject:
   - component: {fileID: 6395080770137807877}
   - component: {fileID: 5652231321884011779}
   - component: {fileID: 1019999084}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}

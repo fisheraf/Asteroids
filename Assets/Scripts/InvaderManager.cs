@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class InvaderManager : MonoBehaviour
 {
+    [SerializeField] GameObject InvadersGame;
     [SerializeField] GameObject invaderPrefab;
     [SerializeField] float startingInvaderSpeed;
     [SerializeField] List<Invader> ListOfInvaders = new List<Invader>();
@@ -23,7 +24,11 @@ public class InvaderManager : MonoBehaviour
 
     [SerializeField] GameObject bunkerPrefab;
 
+    [SerializeField] BoxCollider2D[] bulletKillers;
+
     InvaderMovement invaderMovement;
+
+    Planet planet;
 
     // Start is called before the first frame update
     void Start()
@@ -34,15 +39,30 @@ public class InvaderManager : MonoBehaviour
         NewRandomSpawnTime();
     }
 
-    public void StartInvaderGame()
+    public void StartInvaderGame(Planet _planet, int rowCount, int columnCount, int invaderScoreValue)
     {
+        SetInvadersGameLocation(GameManager.Instance.Player.transform.position);
+        GameManager.Instance.SetGameState(GameManager.GameState.Invaders);
+        planet = _planet;
         SetInvaderSpeed(startingInvaderSpeed);
         NewRandomReloadTime();
         NewRandomSpawnTime();
 
         CreateNewBunkers();
 
-        CreateInvaderWave(3, 6, 10);
+        CreateInvaderWave(rowCount, columnCount, invaderScoreValue);
+
+        GameManager.Instance.Player.transform.SetPositionAndRotation(new Vector3(InvadersGame.transform.position.x, InvadersGame.transform.position.y -9f, -1), Quaternion.identity);
+    }
+
+    public void EndInvaderGame()
+    {
+        planet.InvadersPresent = false;
+        planet = null;
+        DestroyBunkers();
+        DestroyMysteryShip();
+        SetBulletKillersActive(false);
+        GameManager.Instance.SetGameState(GameManager.GameState.OverWorld); //World menu? text?
     }
 
     // Update is called once per frame
@@ -100,6 +120,8 @@ public class InvaderManager : MonoBehaviour
                     CreateInvaderWave(5, 11, 25);
                     break;
             }*/
+
+            EndInvaderGame();
         }
     }
 
@@ -129,16 +151,27 @@ public class InvaderManager : MonoBehaviour
     {
         Instantiate(mysteryShipPrefab, mysteryShipSpawnLocation.position, mysteryShipSpawnLocation.rotation);
     }
+    private void DestroyMysteryShip()
+    {
+        GameObject mysteryShip = GameObject.Find("Mystery Ship");
+        if (mysteryShip != null)
+        {
+            Destroy(mysteryShip);
+        }
+    }
 
     public void CreateInvaderWave(int rowCount, int columnCount, int invaderScoreValue)
     {
-        for (int i = 0; i < rowCount; i++)  //turn 5 to dynamic
+        invaderHolder.transform.localPosition = new Vector3(0, 8);
+
+        for (int i = 0; i < rowCount; i++)
         {
-            for (int j = 0; j < columnCount; j++)  //turn 11 to dynamic
+            for (int j = 0; j < columnCount; j++)
             {
-                GameObject invaderObject = Instantiate(invaderPrefab, new Vector3(-19 + 1.5f * j, 8 - 1.5f * i, 0), Quaternion.identity, invaderHolder.transform);
+                GameObject invaderObject = Instantiate(invaderPrefab, invaderHolder.transform, false);
+                invaderObject.transform.localPosition = new Vector3(-19f + 1.5f * j, -1.5f * i, 0);
                 Invader invader = invaderObject.GetComponent<Invader>();
-                invader.SetScoreValue(invaderScoreValue);  //dynamic
+                invader.SetScoreValue(invaderScoreValue);//dynamic by row?
                 ListOfInvaders.Add(invader);
             }
         }
@@ -146,9 +179,35 @@ public class InvaderManager : MonoBehaviour
     
     private void CreateNewBunkers()
     {
+        GameObject bunkerHolder = new GameObject("Bunker Holder");
+        bunkerHolder.transform.SetParent(InvadersGame.transform);
+        bunkerHolder.transform.localPosition = Vector3.zero;
+
         for (int i = 0; i < 5; i++)
         {
-            Instantiate(bunkerPrefab, new Vector3(-14 + 7f * i, -6.5f, 0), Quaternion.identity);
+            GameObject bunker = Instantiate(bunkerPrefab, bunkerHolder.transform, false);
+            bunker.transform.localPosition = new Vector3(-14 + 7f * i, -6.5f, 0);
+            bunker.name = "Bunker " + i;
+            //Instantiate(bunkerPrefab, new Vector3(-14 + 7f * i, -6.5f, 0), Quaternion.identity);
         }
+    }
+
+    private void DestroyBunkers()
+    {
+        Destroy(GameObject.Find("Bunker Holder"));
+    }
+
+
+    public void SetBulletKillersActive(bool b)
+    {
+        foreach (BoxCollider2D boxCollider2D in bulletKillers)
+        {
+            boxCollider2D.enabled = b;
+        }
+    }
+
+    public void SetInvadersGameLocation(Vector2 location)
+    {
+        InvadersGame.transform.position = new Vector3(location.x, location.y, -1);
     }
 }
